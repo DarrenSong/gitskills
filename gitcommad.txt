@@ -1,0 +1,78 @@
+
+#Linux安装，window下可在官网直接下载手动安装，
+ sudo apt-get install git
+# 配置，window下运行git.bash运行以下命令
+ git config --global user.name "Your Name"
+ git config --global user.email "email@example.com"
+# 初始化
+ git init
+# 增加文件
+ git add readme.txt
+# 提交文件
+ git commt -m "wrote readme"
+# 创建ssh密钥，之后再github上添加该密钥，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人
+ ssh-keygen -t rsa -C "youremail@example.com" #Linux下路径/home/darren/.sshid_rsa.pub, windows下路径C:\Users\Administrator\.ssh\id_rsa.pub
+      
+# 关联远程仓库对应文件
+ git remote add origin git@github.com:darrensong/learngit.git
+# 提交到远程仓库
+ git push -u origin master  #首次用-u
+# 从远程仓库clone
+ git clone git@github.com:darrensong/learngit.git
+ 
+#常用命令
+ git status #命令可以让我们时刻掌握仓库当前的状态
+ git diff readme.txt #顾名思义就是查看difference，查看修改内容
+ 
+ git log #显示从最近到最远的提交日志 git log --pretty=oneline
+ 
+ git reset --hard HEAD^ #回退到上一个版本   HEAD^^回退到上上一个版本
+ 
+ git reset --hard 3628164  #回退到版本号3628164
+ cat readme.txt #查看
+ git reflog
+ git checkout -- readme.txt #把readme.txt文件在工作区的修改全部撤销，这里有两种情况：
+
+#一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；
+
+#一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
+
+#总之，就是让这个文件回到最近一次git commit或git add时的状态。
+
+git reset HEAD readme.txt  #可以把暂存区的修改撤销掉（unstage），重新放回工作区
+rm test.txt #删除文件
+git rm test.txt git commit
+
+
+#分支相关
+ git checkout -b dev #创建dev分支，然后切换到dev分支.，等同于git branch dev，git checkout dev
+ git branch #查看当前分支
+ git checkout master #切换回master分支
+ git merge dev #把dev分支的工作成果合并到master分支上 ， --no-ff参数，表示禁用Fast forward
+ git branch -d dev #合并完成后，就可以放心地删除dev分支了
+ git stash #可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作
+ git checkout dev
+ git stash apply #恢复
+ git stash drop #删除
+ git stash pop  #恢复并删除
+ git stash list
+ 
+ git remote #查看远程库的信息 -v
+ 
+ git push origin master #推送分支
+ git push origin dev #推送分支dev
+ 
+#标签
+ git tag v1.0 	
+ git log --pretty=oneline --abbrev-commit
+ git tag v0.9 622493
+ git tag
+ git show v0.9
+ git tag -d v0.1 #删除标签
+ git push origin v1.0
+ git push origin --tags #一次性推送全部尚未推送到远程的本地标签
+ git tag -d v0.9 #先删除本地
+ git push origin :refs/tags/v0.9 #再删除远程
+ 
+ 
+ 
